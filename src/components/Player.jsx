@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 
-const Player = ({ initialName, symbol }) => {
+const Player = ({ initialName, symbol, isActive, onChangeName }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [playerName, setPlayerName] = useState(initialName);
 
   const handleClick = () => {
     setIsEditing((isEditing) => !isEditing);
+
+    // only when finishing editing a name the onChangeName function should be triggert
+    if (isEditing) {
+      onChangeName(symbol, playerName);
+    }
   };
 
   const handleChange = (e) => {
@@ -13,7 +18,7 @@ const Player = ({ initialName, symbol }) => {
   };
 
   return (
-    <li>
+    <li className={isActive ? "active" : undefined}>
       <span className="player">
         {isEditing ? (
           <input
